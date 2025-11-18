@@ -82,6 +82,14 @@ body {
   box-shadow: 0 0 15px rgba(244, 67, 54, 0.8);
 }
 
+.opcion:disabled {
+  background: #555;
+  color: #aaa;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
 #result {
   margin-top: 1rem;
   font-size: 1.3rem;
