@@ -43,5 +43,9 @@
   { "imagen": "img/samfisher.png", "opciones": ["Sam Fisher", "Agent 47", "Snake"], "respuestaIndex": 0, "juego": "Splinter Cell" },
   { "imagen": "img/maxpayne.png", "opciones": ["Max Payne", "Alan Wake", "Sam Lake"], "respuestaIndex": 0, "juego": "Max Payne" },
   { "imagen": "img/alanwake.png", "opciones": ["Alan Wake", "Max Payne", "Jesse"], "respuestaIndex": 0, "juego": "Alan Wake" },
-  { "imagen": "img/cal_kestis.png", "opciones": ["Cal Kestis", "Luke Skywalker", "Ezra Bridger"], "respuestaIndex": 0, "juego": "Star Wars Jedi: Survivor" }
+  { "imagen": "img/cal_kestis.png", "opciones": ["Cal Kestis", "Luke Skywalker", "Ezra Bridger"], "respuestaIndex": 0, "juego": "Star Wars Jedi: Survivor" },
+  { "imagen": "img/ryu.png", "opciones": ["Ryu", "Ken", "Chun-Li"], "respuestaIndex": 0, "juego": "Street Fighter" },
+  { "imagen": "img/scorpion.png", "opciones": ["Scorpion", "Sub-Zero", "Raiden"], "respuestaIndex": 0, "juego": "Mortal Kombat" },
+  { "imagen": "img/pikachu.png", "opciones": ["Pikachu", "Charmander", "Bulbasaur"], "respuestaIndex": 0, "juego": "Pokémon" },
+  { "imagen": "img/sonic.png", "opciones": ["Sonic", "Tails", "Knuckles"], "respuestaIndex": 0, "juego": "Sonic the Hedgehog" }
 ]
