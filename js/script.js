@@ -28,26 +28,35 @@ function seleccionarPreguntas() {
 // Cargar una pregunta en pantalla
 function cargarPregunta() {
   const pregunta = preguntasSeleccionadas[preguntaActual];
+
+  // Barajar opciones
+  const opciones = [...pregunta.opciones];
+  const respuestaCorrecta = opciones[pregunta.respuestaIndex];
+
+  // Algoritmo Fisher-Yates para mezclar
+  for (let i = opciones.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
+  }
+
+  // Guardar nuevo índice correcto
+  pregunta.opciones = opciones;
+  pregunta.respuestaIndex = opciones.indexOf(respuestaCorrecta);
+
+  // Mostrar en pantalla
   document.querySelector(".character-image").src = pregunta.imagen;
-  document.getElementById("opcion1").textContent = pregunta.opciones[0];
-  document.getElementById("opcion2").textContent = pregunta.opciones[1];
-  document.getElementById("opcion3").textContent = pregunta.opciones[2];
+  document.getElementById("opcion1").textContent = opciones[0];
+  document.getElementById("opcion2").textContent = opciones[1];
+  document.getElementById("opcion3").textContent = opciones[2];
   document.getElementById("result").textContent = "";
 
   // Resetear estilos de botones
-  document.querySelectorAll(".opcion").forEach((boton) => {
+  document.querySelectorAll(".opcion").forEach(boton => {
     boton.classList.remove("correct", "incorrect");
+    boton.disabled = false;
   });
-
-  const result = document.getElementById("result");
-  result.classList.remove("fade-in");
-  result.classList.add("fade-out");
-  setTimeout(() => {
-    result.textContent = "";
-    result.classList.remove("fade-out");
-    result.classList.add("fade-in");
-  }, 200);
 }
+
 
 // Verificar respuesta usando índice
 function verificarRespuesta(opcionIndex) {
