@@ -72,7 +72,6 @@ function mostrarResultados() {
   }
 }
 
-
 // Actualizar barra de progreso
 function actualizarProgreso() {
   const progreso = (preguntaActual / preguntasSeleccionadas.length) * 100;
@@ -89,6 +88,10 @@ document.getElementById("reiniciar").addEventListener("click", () => {
   preguntaActual = 0;
   aciertos = 0;
   document.getElementById("reiniciar").style.display = "none";
+
+  // Resetear estilos especiales
+  document.getElementById("result").classList.remove("perfect-win");
+
   seleccionarPreguntas();
   cargarPregunta();
   actualizarProgreso();
