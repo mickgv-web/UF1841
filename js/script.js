@@ -2,6 +2,7 @@ let personajes = [];
 let preguntasSeleccionadas = [];
 let preguntaActual = 0;
 let aciertos = 0;
+let primeraCarga = true;
 
 // Cargar datos desde JSON externo
 fetch("data/personajes.json")
@@ -31,42 +32,51 @@ function cargarPregunta() {
   const imagen = document.querySelector(".character-image");
   const opcionesContainer = document.querySelector(".opciones-container");
 
-  // Transición suave al cambiar pregunta
-  imagen.classList.add("fade-out");
-  opcionesContainer.classList.add("fade-out");
+  // Si NO es la primera carga, aplicamos fade-out/fade-in
+  if (!primeraCarga) {
+    imagen.classList.add("fade-out");
+    opcionesContainer.classList.add("fade-out");
 
-  setTimeout(() => {
-    // Barajar opciones y recalcular índice correcto
-    const opciones = [...pregunta.opciones];
-    const respuestaCorrecta = opciones[pregunta.respuestaIndex];
-    for (let i = opciones.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
-    }
-    pregunta.opciones = opciones;
-    pregunta.respuestaIndex = opciones.indexOf(respuestaCorrecta);
-
-    // Actualizar contenido
-    imagen.src = pregunta.imagen;
-    document.getElementById("opcion1").textContent = opciones[0];
-    document.getElementById("opcion2").textContent = opciones[1];
-    document.getElementById("opcion3").textContent = opciones[2];
-    document.getElementById("result").textContent = "";
-
-    // Resetear estilos de botones
-    document.querySelectorAll(".opcion").forEach(boton => {
-      boton.classList.remove("correct", "incorrect");
-      boton.disabled = false;
-    });
-
-    // 🔥 Fade-in después de actualizar
-    imagen.classList.remove("fade-out");
-    opcionesContainer.classList.remove("fade-out");
-    imagen.classList.add("fade-in");
-    opcionesContainer.classList.add("fade-in");
-
-  }, 500); // tiempo de fade-out antes de cambiar contenido
+    setTimeout(() => {
+      actualizarContenido(pregunta, imagen, opcionesContainer);
+      imagen.classList.remove("fade-out");
+      opcionesContainer.classList.remove("fade-out");
+      imagen.classList.add("fade-in");
+      opcionesContainer.classList.add("fade-in");
+    }, 500);
+  } else {
+    // Primera carga: mostrar directamente sin animación
+    actualizarContenido(pregunta, imagen, opcionesContainer);
+    primeraCarga = false; // desactivar bandera
+  }
 }
+
+// Función auxiliar para actualizar contenido
+function actualizarContenido(pregunta, imagen, opcionesContainer) {
+  // Barajar opciones y recalcular índice correcto
+  const opciones = [...pregunta.opciones];
+  const respuestaCorrecta = opciones[pregunta.respuestaIndex];
+  for (let i = opciones.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
+  }
+  pregunta.opciones = opciones;
+  pregunta.respuestaIndex = opciones.indexOf(respuestaCorrecta);
+
+  // Actualizar contenido
+  imagen.src = pregunta.imagen;
+  document.getElementById("opcion1").textContent = opciones[0];
+  document.getElementById("opcion2").textContent = opciones[1];
+  document.getElementById("opcion3").textContent = opciones[2];
+  document.getElementById("result").textContent = "";
+
+  // Resetear estilos de botones
+  document.querySelectorAll(".opcion").forEach(boton => {
+    boton.classList.remove("correct", "incorrect");
+    boton.disabled = false;
+  });
+}
+
 
 // Verificar respuesta usando índice
 function verificarRespuesta(opcionIndex) {
