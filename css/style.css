@@ -105,30 +105,48 @@ body {
   transform: translateY(-3px);
 }
 
-/* 📱 Adaptación para móviles */
 @media (max-width: 600px) {
+  .game-quiz {
+    padding: 1rem;
+    margin: 1rem;
+  }
+
+  h1 {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+  }
+
+  p, #result {
+    font-size: 0.95rem;
+    margin: 0.5rem 0;
+  }
+
+  .character-image {
+    max-width: 85%;
+    margin: 0.5rem auto;
+  }
+
   .opciones-container {
     flex-direction: column;
-    gap: 0.8rem;
+    gap: 0.6rem;
   }
 
   .opcion {
     width: 100%;
-    font-size: 1rem;
-    padding: 0.9rem;
-  }
-
-  .character-image {
-    max-width: 90%;
+    font-size: 0.95rem;
+    padding: 0.7rem;
   }
 
   #progress-container {
     width: 95%;
+    margin: 0.8rem auto;
   }
 
   .reiniciar {
     width: 100%;
-    font-size: 1rem;
-    padding: 0.9rem;
+    font-size: 0.95rem;
+    padding: 0.7rem;
+    margin-top: 1rem;
   }
 }
+
