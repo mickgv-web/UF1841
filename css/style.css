@@ -69,6 +69,20 @@ body {
   transform: translateY(-3px);
 }
 
+/* Feedback visual en botones */
+.opcion.correct {
+  background: #4caf50 !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.8);
+}
+
+.opcion.incorrect {
+  background: #f44336 !important;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(244, 67, 54, 0.8);
+}
+
+
 /* 📊 Resultado */
 #result {
   margin-top: 1rem;

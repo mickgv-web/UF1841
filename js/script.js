@@ -33,18 +33,30 @@ function cargarPregunta() {
   document.getElementById("opcion2").textContent = pregunta.opciones[1];
   document.getElementById("opcion3").textContent = pregunta.opciones[2];
   document.getElementById("result").textContent = "";
+
+  // Resetear estilos de botones
+  document.querySelectorAll(".opcion").forEach(boton => {
+    boton.classList.remove("correct", "incorrect");
+  });
 }
 
 // Verificar respuesta usando índice
 function verificarRespuesta(opcionIndex) {
   const pregunta = preguntasSeleccionadas[preguntaActual];
   const result = document.getElementById("result");
+  const botones = document.querySelectorAll(".opcion");
+
+  // Resetear clases previas
+  botones.forEach(b => b.classList.remove("correct", "incorrect"));
 
   if (opcionIndex === pregunta.respuestaIndex) {
     result.textContent = `✅ Correcto! Era ${pregunta.opciones[pregunta.respuestaIndex]} de ${pregunta.juego}`;
     aciertos++;
+    botones[opcionIndex].classList.add("correct");
   } else {
     result.textContent = `❌ Incorrecto. La respuesta correcta era: ${pregunta.opciones[pregunta.respuestaIndex]} de ${pregunta.juego}`;
+    botones[opcionIndex].classList.add("incorrect");
+    botones[pregunta.respuestaIndex].classList.add("correct"); // marcar la correcta
   }
 
   preguntaActual++;
@@ -53,9 +65,10 @@ function verificarRespuesta(opcionIndex) {
   if (preguntaActual < preguntasSeleccionadas.length) {
     setTimeout(cargarPregunta, 1500);
   } else {
-    mostrarResultados();
+    setTimeout(mostrarResultados, 1500);
   }
 }
+
 
 // Mostrar resultados finales
 function mostrarResultados() {
