@@ -28,35 +28,45 @@ function seleccionarPreguntas() {
 // Cargar una pregunta en pantalla
 function cargarPregunta() {
   const pregunta = preguntasSeleccionadas[preguntaActual];
+  const imagen = document.querySelector(".character-image");
+  const opcionesContainer = document.querySelector(".opciones-container");
 
-  // Barajar opciones
-  const opciones = [...pregunta.opciones];
-  const respuestaCorrecta = opciones[pregunta.respuestaIndex];
+  // Transición suave al cambiar pregunta
+  imagen.classList.add("fade-out");
+  opcionesContainer.classList.add("fade-out");
 
-  // Algoritmo Fisher-Yates para mezclar
-  for (let i = opciones.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
-  }
+  setTimeout(() => {
+    // Barajar opciones y recalcular índice correcto
+    const opciones = [...pregunta.opciones];
+    const respuestaCorrecta = opciones[pregunta.respuestaIndex];
+    for (let i = opciones.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [opciones[i], opciones[j]] = [opciones[j], opciones[i]];
+    }
+    pregunta.opciones = opciones;
+    pregunta.respuestaIndex = opciones.indexOf(respuestaCorrecta);
 
-  // Guardar nuevo índice correcto
-  pregunta.opciones = opciones;
-  pregunta.respuestaIndex = opciones.indexOf(respuestaCorrecta);
+    // Actualizar contenido
+    imagen.src = pregunta.imagen;
+    document.getElementById("opcion1").textContent = opciones[0];
+    document.getElementById("opcion2").textContent = opciones[1];
+    document.getElementById("opcion3").textContent = opciones[2];
+    document.getElementById("result").textContent = "";
 
-  // Mostrar en pantalla
-  document.querySelector(".character-image").src = pregunta.imagen;
-  document.getElementById("opcion1").textContent = opciones[0];
-  document.getElementById("opcion2").textContent = opciones[1];
-  document.getElementById("opcion3").textContent = opciones[2];
-  document.getElementById("result").textContent = "";
+    // Resetear estilos de botones
+    document.querySelectorAll(".opcion").forEach(boton => {
+      boton.classList.remove("correct", "incorrect");
+      boton.disabled = false;
+    });
 
-  // Resetear estilos de botones
-  document.querySelectorAll(".opcion").forEach(boton => {
-    boton.classList.remove("correct", "incorrect");
-    boton.disabled = false;
-  });
+    // 🔥 Fade-in después de actualizar
+    imagen.classList.remove("fade-out");
+    opcionesContainer.classList.remove("fade-out");
+    imagen.classList.add("fade-in");
+    opcionesContainer.classList.add("fade-in");
+
+  }, 500); // tiempo de fade-out antes de cambiar contenido
 }
-
 
 // Verificar respuesta usando índice
 function verificarRespuesta(opcionIndex) {

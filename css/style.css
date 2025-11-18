@@ -143,9 +143,16 @@ body {
   font-weight: bold;
 }
 
+.character-image,
+.opciones-container {
+  opacity: 1;
+  transition: opacity 0.5s ease; /* transición suave */
+}
+
 .fade-out {
   opacity: 0;
 }
+
 .fade-in {
   opacity: 1;
 }
