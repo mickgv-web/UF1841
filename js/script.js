@@ -5,14 +5,14 @@ let aciertos = 0;
 
 // Cargar datos desde JSON externo
 fetch("data/personajes.json")
-  .then(response => response.json())
-  .then(data => {
+  .then((response) => response.json())
+  .then((data) => {
     personajes = data;
     seleccionarPreguntas();
     cargarPregunta();
     actualizarProgreso();
   })
-  .catch(error => console.error("Error cargando personajes:", error));
+  .catch((error) => console.error("Error cargando personajes:", error));
 
 // Seleccionar 5 preguntas aleatorias
 function seleccionarPreguntas() {
@@ -35,9 +35,18 @@ function cargarPregunta() {
   document.getElementById("result").textContent = "";
 
   // Resetear estilos de botones
-  document.querySelectorAll(".opcion").forEach(boton => {
+  document.querySelectorAll(".opcion").forEach((boton) => {
     boton.classList.remove("correct", "incorrect");
   });
+
+  const result = document.getElementById("result");
+  result.classList.remove("fade-in");
+  result.classList.add("fade-out");
+  setTimeout(() => {
+    result.textContent = "";
+    result.classList.remove("fade-out");
+    result.classList.add("fade-in");
+  }, 200);
 }
 
 // Verificar respuesta usando índice
@@ -47,14 +56,18 @@ function verificarRespuesta(opcionIndex) {
   const botones = document.querySelectorAll(".opcion");
 
   // Resetear clases previas
-  botones.forEach(b => b.classList.remove("correct", "incorrect"));
+  botones.forEach((b) => b.classList.remove("correct", "incorrect"));
 
   if (opcionIndex === pregunta.respuestaIndex) {
-    result.textContent = `✅ Correcto! Era ${pregunta.opciones[pregunta.respuestaIndex]} de ${pregunta.juego}`;
+    result.textContent = `✅ Correcto! Era ${
+      pregunta.opciones[pregunta.respuestaIndex]
+    } de ${pregunta.juego}`;
     aciertos++;
     botones[opcionIndex].classList.add("correct");
   } else {
-    result.textContent = `❌ Incorrecto. La respuesta correcta era: ${pregunta.opciones[pregunta.respuestaIndex]} de ${pregunta.juego}`;
+    result.textContent = `❌ Incorrecto. La respuesta correcta era: ${
+      pregunta.opciones[pregunta.respuestaIndex]
+    } de ${pregunta.juego}`;
     botones[opcionIndex].classList.add("incorrect");
     botones[pregunta.respuestaIndex].classList.add("correct"); // marcar la correcta
   }
@@ -69,7 +82,6 @@ function verificarRespuesta(opcionIndex) {
   }
 }
 
-
 // Mostrar resultados finales
 function mostrarResultados() {
   const result = document.getElementById("result");
@@ -77,6 +89,11 @@ function mostrarResultados() {
 
   // Mostrar botón de reinicio
   document.getElementById("reiniciar").style.display = "inline-block";
+
+  // Desactivar botones de opciones
+  document.querySelectorAll(".opcion").forEach(boton => {
+    boton.disabled = true;
+  });
 
   // Si acertó todas, añadir visual
   if (aciertos === preguntasSeleccionadas.length) {
@@ -104,6 +121,11 @@ document.getElementById("reiniciar").addEventListener("click", () => {
 
   // Resetear estilos especiales
   document.getElementById("result").classList.remove("perfect-win");
+
+  // 🔥 Volver a activar botones
+  document.querySelectorAll(".opcion").forEach(boton => {
+    boton.disabled = false;
+  });
 
   seleccionarPreguntas();
   cargarPregunta();
